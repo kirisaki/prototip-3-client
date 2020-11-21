@@ -1,15 +1,21 @@
-import Link from 'next/link'
 import Layout from '../components/Layout'
 
-const IndexPage = () => (
+type Props = {
+  devices: string[],
+}
+
+const IndexPage: React.FC<Props> = ({devices}) => (
   <Layout title="Home | Next.js + TypeScript Example">
     <h1>Hello Next.js 👋</h1>
     <p>
-      <Link href="/about">
-        <a>About</a>
-      </Link>
+      {devices.map(device => device)}
     </p>
   </Layout>
 )
+
+export const getServerSideProps = async(): Promise<string[]> => {
+  return []
+}
+
 
 export default IndexPage
