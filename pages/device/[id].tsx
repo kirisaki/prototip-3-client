@@ -1,14 +1,12 @@
 import {GetServerSideProps} from 'next'
 import Layout from '../../components/Layout'
+import {req} from '../../utils/req'
 
 type Props = {
   id: string,
   detail: string,
 }
 
-type ServerSideProps = {
-  props: Props,
-}
 
 const Device: React.FC<Props> = ({id, detail}) => {
 
@@ -24,13 +22,18 @@ const Device: React.FC<Props> = ({id, detail}) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async(ctx): Promise<ServerSideProps> => {
+export const getServerSideProps: GetServerSideProps = async(ctx) => {
   let { id } = ctx.query
   if (typeof id !== 'string') {
     id = id[0]
   }
-
-  return {props: {id: id, detail: "a dayo"}}
+  let result: Props
+  try {
+    result = await req<Props>(`https://prototip-3-server-tawny.vercel.app/device/${id}`)
+  } catch {
+    return {notFound: true}
+  }
+  return {props: {id: result.id, detail: result.detail}}
 }
 
 export default Device

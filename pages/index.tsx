@@ -1,5 +1,6 @@
 import Layout from '../components/Layout'
 import Item from '../components/Item'
+import {req} from '../utils/req'
 
 type Props = {
   devices: string[],
@@ -11,7 +12,7 @@ type ServerSideProps = {
 
 const IndexPage: React.FC<Props> = ({devices}) => (
   <Layout title="Home | Next.js + TypeScript Example">
-    <h1>Hello Next.js 👋</h1>
+    <h1>Hello Next.js</h1>
     <p>
       {devices.map(device => <Item device={device} />)}
     </p>
@@ -19,7 +20,8 @@ const IndexPage: React.FC<Props> = ({devices}) => (
 )
 
 export const getServerSideProps = async(): Promise<ServerSideProps> => {
-  return {props: {devices: ["a", "b"]}}
+  const result = await req<Props>('https://prototip-3-server-tawny.vercel.app/devices')
+  return {props: {devices: result.devices}}
 }
 
 
