@@ -12,7 +12,7 @@ type ServerSideProps = {
 
 const IndexPage: React.FC<Props> = ({devices}) => (
   <Layout title="Home | Next.js + TypeScript Example">
-    <h1>Hello Next.js</h1>
+    <h1>nyaan</h1>
     <p>
       {devices.map(device => <Item device={device} />)}
     </p>
